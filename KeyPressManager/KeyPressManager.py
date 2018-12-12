@@ -5,6 +5,8 @@
 # -------------------------------------------------------------------------------
 # --- IMPORTS (standard, then third party, then my own modules)
 # -------------------------------------------------------------------------------
+import time
+
 import cv2
 import matplotlib.pyplot as plt
 import numpy as np
@@ -43,21 +45,31 @@ class WindowManager:
     def mplKeyPressCallback(self, event):
         self.mpl_pressed_key = event.key
 
-    def waitForKey(self):
+    def waitForKey(self, time_to_wait = None):
         """
         Waits for a key to be pressed
         :return: True if should abort program, false if not
         """
+        t = time.time()
         print('keyPressManager.\nPress "c" to continue or "q" to abort.')
         self.mpl_pressed_key = None
         while True:
-            key = cv2.waitKey(15)
+            key = cv2.waitKey(10)
 
             if not self.fig == None:
                 plt.waitforbuttonpress(0.01)
+
             if key == ord('c') or self.mpl_pressed_key == 'c':
                 print('Pressed "c". Continuing.')
                 return False
             elif key == ord('q') or self.mpl_pressed_key == 'q':
                 print('Pressed "q". Aborting.')
                 return True
+
+            if not time_to_wait == None:
+                if (time.time() - t) > time_to_wait:
+                    print('Time to wait ellapsed. Returning.')
+                    return False
+
+
+
