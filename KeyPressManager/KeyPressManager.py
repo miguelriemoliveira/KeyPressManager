@@ -45,13 +45,15 @@ class WindowManager:
     def mplKeyPressCallback(self, event):
         self.mpl_pressed_key = event.key
 
-    def waitForKey(self, time_to_wait = None):
+    def waitForKey(self, time_to_wait = None, verbose=True):
         """
         Waits for a key to be pressed
         :return: True if should abort program, false if not
         """
         t = time.time()
-        print('keyPressManager.\nPress "c" to continue or "q" to abort.')
+        if verbose:
+            print('keyPressManager.\nPress "c" to continue or "q" to abort.')
+
         self.mpl_pressed_key = None
         while True:
             key = cv2.waitKey(10)
@@ -68,7 +70,8 @@ class WindowManager:
 
             if not time_to_wait == None:
                 if (time.time() - t) > time_to_wait:
-                    print('Time to wait ellapsed. Returning.')
+                    if verbose:
+                        print('Time to wait ellapsed. Returning.')
                     return False
 
 
