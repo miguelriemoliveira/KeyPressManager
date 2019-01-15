@@ -66,7 +66,7 @@ class WindowManager:
                 return False
             elif key == ord('q') or self.mpl_pressed_key == 'q':
                 print('Pressed "q". Aborting.')
-                return True
+                exit(0)
 
             if not time_to_wait == None:
                 if (time.time() - t) > time_to_wait:
