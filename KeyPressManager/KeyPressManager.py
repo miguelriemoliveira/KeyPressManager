@@ -38,11 +38,21 @@ def drawAxis3D(ax, transform, text, axis_scale=0.1, line_width=1.0):
 class WindowManager:
 
     def __init__(self, fig=None):
-        self.fig = fig
-        if not self.fig == None:
-            self.fig.canvas.mpl_connect('key_press_event', self.mplKeyPressCallback)
+        """
+        :type fig: figure handle or list of figure handles
+        """
+        # Handle the argument fig as a figure handle or a list of figure handles
+        if fig is list:
+            self.figs = fig
+        else:
+            self.figs = [fig]
+
+        if not self.figs is None:
+            for fig in self.figs:
+                fig.canvas.mpl_connect('key_press_event', self.mplKeyPressCallback)
 
     def mplKeyPressCallback(self, event):
+        print('callback')
         self.mpl_pressed_key = event.key
 
     def waitForKey(self, time_to_wait = None, verbose=True):
@@ -58,7 +68,7 @@ class WindowManager:
         while True:
             key = cv2.waitKey(10)
 
-            if not self.fig == None:
+            if not self.figs is None:
                 plt.waitforbuttonpress(0.01)
 
             if key == ord('c') or self.mpl_pressed_key == 'c':
