@@ -37,18 +37,21 @@ def drawAxis3D(ax, transform, text, axis_scale=0.1, line_width=1.0):
 # -------------------------------------------------------------------------------
 class WindowManager:
 
-    def __init__(self, fig=None):
+    def __init__(self, figs=None):
         """
         :type fig: figure handle or list of figure handles
         """
         # Handle the argument fig as a figure handle or a list of figure handles
-        if fig is list:
-            self.figs = fig
+        if type(figs) is list:
+            self.figs = figs
+            print('it is a list')
         else:
-            self.figs = [fig]
+            self.figs = [figs]
+            print('it is not a list')
 
-        if not self.figs is None:
+        if not self.figs[0] is None:
             for fig in self.figs:
+                print fig
                 fig.canvas.mpl_connect('key_press_event', self.mplKeyPressCallback)
 
     def mplKeyPressCallback(self, event):
