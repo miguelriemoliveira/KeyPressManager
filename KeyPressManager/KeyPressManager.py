@@ -44,18 +44,14 @@ class WindowManager:
         # Handle the argument fig as a figure handle or a list of figure handles
         if type(figs) is list:
             self.figs = figs
-            print('it is a list')
         else:
             self.figs = [figs]
-            print('it is not a list')
 
         if not self.figs[0] is None:
             for fig in self.figs:
-                print fig
                 fig.canvas.mpl_connect('key_press_event', self.mplKeyPressCallback)
 
     def mplKeyPressCallback(self, event):
-        print('callback')
         self.mpl_pressed_key = event.key
 
     def waitForKey(self, time_to_wait = None, verbose=True):
