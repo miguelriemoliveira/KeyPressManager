@@ -68,7 +68,10 @@ class WindowManager:
             key = cv2.waitKey(10)
 
             if not self.figs is None:
-                plt.waitforbuttonpress(0.01)
+                for fig in self.figs:
+                    # fig.canvas.flush_events()
+                    fig.canvas.draw()
+                    plt.waitforbuttonpress(0.01)
 
             if key == ord('c') or self.mpl_pressed_key == 'c':
                 print('Pressed "c". Continuing.')
