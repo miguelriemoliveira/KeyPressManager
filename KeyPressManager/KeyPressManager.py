@@ -54,24 +54,26 @@ class WindowManager:
     def mplKeyPressCallback(self, event):
         self.mpl_pressed_key = event.key
 
-    def waitForKey(self, time_to_wait = None, verbose=True):
+    def waitForKey(self, time_to_wait = None, verbose=True, message=None):
         """
         Waits for a key to be pressed
         :return: True if should abort program, false if not
         """
         t = time.time()
         if verbose:
-            print('keyPressManager.\nPress "c" to continue or "q" to abort.')
+            if message is None:
+                message = 'keyPressManager: Press "c" to continue or "q" to abort.'
+            print(message)
 
         self.mpl_pressed_key = None
         while True:
-            key = cv2.waitKey(10)
+            key = cv2.waitKey(5)
 
             if not self.figs is None:
                 for fig in self.figs:
                     # fig.canvas.flush_events()
                     fig.canvas.draw()
-                    plt.waitforbuttonpress(0.01)
+                    plt.waitforbuttonpress(0.005)
 
             if key == ord('c') or self.mpl_pressed_key == 'c':
                 print('Pressed "c". Continuing.')
