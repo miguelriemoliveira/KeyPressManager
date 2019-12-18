@@ -54,7 +54,7 @@ class WindowManager:
     def mplKeyPressCallback(self, event):
         self.mpl_pressed_key = event.key
 
-    def waitForKey(self, time_to_wait = None, verbose=True, message=None):
+    def waitForKey(self, time_to_wait=None, verbose=True, message=None):
         """
         Waits for a key to be pressed
         :return: True if should abort program, false if not
@@ -71,7 +71,7 @@ class WindowManager:
 
             if not self.figs is None:
                 for fig in self.figs:
-                    # fig.canvas.flush_events()
+                    fig.canvas.flush_events()
                     fig.canvas.draw()
                     plt.waitforbuttonpress(0.005)
 
@@ -82,11 +82,8 @@ class WindowManager:
                 print('Pressed "q". Aborting.')
                 exit(0)
 
-            if not time_to_wait == None:
+            if not time_to_wait is None:
                 if (time.time() - t) > time_to_wait:
                     if verbose:
-                        print('Time to wait ellapsed. Returning.')
+                        print('Time to wait elapsed. Returning.')
                     return False
-
-
-
